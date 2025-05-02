@@ -4,7 +4,7 @@ import dts from "vite-plugin-dts";
 
 export default defineConfig({
   build: {
-    outDir: "static",
+    outDir: "/docs/static",
     minify: true,
     lib: {
       entry: resolve(__dirname, './src/index.ts'),
