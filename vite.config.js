@@ -4,12 +4,12 @@ import dts from "vite-plugin-dts";
 
 export default defineConfig({
   build: {
-    outDir: "/docs/static",
+    outDir: "docs/static",
     minify: true,
     lib: {
       entry: resolve(__dirname, './src/index.ts'),
       name: "Ruler",
-      formats: ['es', 'umd'],
+      formats: ['umd'],
       fileName: (format) => `ruler.${format}.js`,
     },
     rollupOptions: {
