@@ -1,0 +1,37 @@
+import { DomSelection } from "../d3";
+import { Axis } from "d3-axis";
+import { NumberValue, ScaleLinear } from "d3-scale";
+import { ruler_get_ticks_main } from "./ruler_get_ticks_main";
+import { ruler_get_ticks_secondary } from "./ruler_get_ticks_secondary";
+import { ruler_line_add } from "./ruler_line_add";
+import { ruler_line_remove } from "./ruler_line_remove";
+import { ruler_apply_transform } from "./ruler_apply_transform";
+import { ruler_line_render } from "./ruler_line_render";
+import { ruler_mount } from "./ruler_mount";
+import { Observer } from "../observe";
+import { Tooltip } from "./tooltip";
+export type RulerType = "x" | "y";
+export declare class _Ruler {
+    type: RulerType;
+    svg: DomSelection;
+    width: number;
+    height: number;
+    lower: number;
+    upper: number;
+    scaleLinear: ScaleLinear<number, number, undefined>;
+    axis: Axis<NumberValue>;
+    lines: Set<number>;
+    tooltip: Tooltip;
+    __draggingLine: DomSelection | null;
+    observer: Observer<HTMLElement | SVGElement>;
+    get __isX(): boolean;
+    getMainTicks: typeof ruler_get_ticks_main;
+    getSecondaryTicks: typeof ruler_get_ticks_secondary;
+    lineAdd: typeof ruler_line_add;
+    lineRemove: typeof ruler_line_remove;
+    lineRender: typeof ruler_line_render;
+    applyTransform: typeof ruler_apply_transform;
+    mount: typeof ruler_mount;
+    unmount: typeof ruler_mount;
+    constructor(type: RulerType, observer: Observer<HTMLElement | SVGElement>);
+}
