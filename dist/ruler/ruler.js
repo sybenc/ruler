@@ -7,9 +7,13 @@ import { ruler_apply_transform } from "./ruler_apply_transform";
 import { ruler_line_render } from "./ruler_line_render";
 import { ruler_mount } from "./ruler_mount";
 import { Tooltip } from "./tooltip";
+import { ruler_mesh_mount } from "./ruler_mesh_mount";
+import { ruler_mesh_unmount } from "./ruler_mesh_unmount";
+import { ruler_mesh_render } from "./ruler_mesh_render";
 export class _Ruler {
     type;
     svg;
+    mesh;
     width;
     height;
     lower;
@@ -18,8 +22,8 @@ export class _Ruler {
     axis;
     lines = new Set();
     tooltip = new Tooltip();
-    __draggingLine = null;
     observer;
+    __draggingLine = null;
     get __isX() {
         return this.type === "x";
     }
@@ -31,6 +35,9 @@ export class _Ruler {
     applyTransform = ruler_apply_transform;
     mount = ruler_mount;
     unmount = ruler_mount;
+    meshMount = ruler_mesh_mount;
+    meshUnmount = ruler_mesh_unmount;
+    meshRender = ruler_mesh_render;
     constructor(type, observer) {
         this.observer = observer;
         const boardCoord = observer.boardCoord;
@@ -52,22 +59,19 @@ export class _Ruler {
             .attr("width", this.width)
             .attr("height", this.height)
             .style("background", "#DCDCAF")
-            .style("position", "fixed")
+            .style("position", "absolute")
             .style("left", 0)
             .style("top", 0)
             .call(this.axis);
-        this.tooltip.mount().hidden();
         this.svg
             .on("mousemove", (event) => {
             const [mouseX, mouseY] = d3.pointer(event, this.svg);
-            if (d3.select(event.target).classed(`ruler-line`)) {
-                this.tooltip
-                    .show()
-                    .fixed(this.__isX ? mouseX + 4 : 24, this.__isX ? 24 : mouseY + 4)
-                    .html(`${(this.__isX
-                    ? (Math.round(this.scaleLinear.invert(mouseX)) * 100) / this.observer.boardDOMRect.width
-                    : (Math.round(this.scaleLinear.invert(mouseY)) * 100) / this.observer.boardDOMRect.height).toFixed(2)}%`);
-            }
+            this.tooltip
+                .show()
+                .fixed(this.__isX ? mouseX + 4 : 24, this.__isX ? 24 : mouseY + 4)
+                .html(`${(this.__isX
+                ? (Math.round(this.scaleLinear.invert(mouseX)) * 100) / this.observer.boardDOMRect.width
+                : (Math.round(this.scaleLinear.invert(mouseY)) * 100) / this.observer.boardDOMRect.height).toFixed(2)}%`);
         })
             .on("mouseout", () => {
             this.tooltip.hidden();
@@ -76,5 +80,17 @@ export class _Ruler {
             const [mouseX, mouseY] = d3.pointer(event, this.svg);
             this.lineAdd(this.__isX ? mouseX : mouseY);
         });
+        this.mesh = d3
+            .create("svg")
+            .style("position", "absolute")
+            .style("left", 0)
+            .style("top", 0)
+            .attr("viewbox", [0, 0, this.observer.rootDOMRect.width, this.observer.rootDOMRect.height])
+            .attr("width", this.observer.rootDOMRect.width)
+            .attr("height", this.observer.rootDOMRect.height)
+            .style("pointer-events", "none");
+        if (this.__isX) {
+            this.svg.append("rect").attr("x", 0).attr("y", 0).attr("width", 20).attr("height", 20).attr("fill", "#DCDCB4");
+        }
     }
 }

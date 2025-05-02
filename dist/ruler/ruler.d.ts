@@ -10,10 +10,14 @@ import { ruler_line_render } from "./ruler_line_render";
 import { ruler_mount } from "./ruler_mount";
 import { Observer } from "../observe";
 import { Tooltip } from "./tooltip";
+import { ruler_mesh_mount } from "./ruler_mesh_mount";
+import { ruler_mesh_unmount } from "./ruler_mesh_unmount";
+import { ruler_mesh_render } from "./ruler_mesh_render";
 export type RulerType = "x" | "y";
 export declare class _Ruler {
     type: RulerType;
     svg: DomSelection;
+    mesh: DomSelection;
     width: number;
     height: number;
     lower: number;
@@ -22,8 +26,8 @@ export declare class _Ruler {
     axis: Axis<NumberValue>;
     lines: Set<number>;
     tooltip: Tooltip;
-    __draggingLine: DomSelection | null;
     observer: Observer<HTMLElement | SVGElement>;
+    __draggingLine: DomSelection | null;
     get __isX(): boolean;
     getMainTicks: typeof ruler_get_ticks_main;
     getSecondaryTicks: typeof ruler_get_ticks_secondary;
@@ -33,5 +37,8 @@ export declare class _Ruler {
     applyTransform: typeof ruler_apply_transform;
     mount: typeof ruler_mount;
     unmount: typeof ruler_mount;
+    meshMount: typeof ruler_mesh_mount;
+    meshUnmount: typeof ruler_mesh_unmount;
+    meshRender: typeof ruler_mesh_render;
     constructor(type: RulerType, observer: Observer<HTMLElement | SVGElement>);
 }

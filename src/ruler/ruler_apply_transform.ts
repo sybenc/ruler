@@ -36,5 +36,6 @@ export function ruler_apply_transform(this: _Ruler, scale: number, translateX: n
     .attr("text-anchor", "start")
     .attr("transform", this.__isX ? "translate(4,-6)" : "rotate(90) translate(-10, -12)");
   this.lineRender();
-  this.svg.select(".domain").raise();
+  this.meshRender();
+  this.svg.select(".domain").remove();
 }
