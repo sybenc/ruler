@@ -1,5 +1,5 @@
 import d3 from "../d3";
-export function ruler_apply_transform(scale, translateX, translateY) {
+export function ruler_apply_transform({ scale, translateX, translateY }) {
     const translate = this.__isX ? translateX : translateY;
     const actualUpper = Math.max(this.width, this.height);
     const actualLower = 0;

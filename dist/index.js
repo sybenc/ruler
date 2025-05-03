@@ -7,7 +7,7 @@ export default class Ruler {
         this.y = new _Ruler("y", observer);
         this.y.mount();
         this.x.mount();
-        this.x.applyTransform(1, 0, 0);
-        this.y.applyTransform(1, 0, 0);
+        this.x.applyTransform({ scale: 1, translateX: 0, translateY: 0 });
+        this.y.applyTransform({ scale: 1, translateX: 0, translateY: 0 });
     }
 }
