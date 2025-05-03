@@ -1,7 +1,13 @@
 import d3 from "../d3";
 import { _Ruler } from "./ruler";
 
-export function ruler_apply_transform(this: _Ruler, scale: number, translateX: number, translateY: number) {
+export interface Transform {
+  scale: number;
+  translateX: number;
+  translateY: number;
+}
+
+export function ruler_apply_transform(this: _Ruler, { scale, translateX, translateY }: Transform) {
   const translate = this.__isX ? translateX : translateY;
   const actualUpper = Math.max(this.width, this.height);
   const actualLower = 0;
