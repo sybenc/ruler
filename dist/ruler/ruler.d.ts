@@ -26,7 +26,7 @@ export declare class _Ruler {
     axis: Axis<NumberValue>;
     lines: Set<number>;
     tooltip: Tooltip;
-    observer: Observer<HTMLElement | SVGElement>;
+    observer: Observer;
     __draggingLine: DomSelection | null;
     get __isX(): boolean;
     getMainTicks: typeof ruler_get_ticks_main;
@@ -40,5 +40,5 @@ export declare class _Ruler {
     meshMount: typeof ruler_mesh_mount;
     meshUnmount: typeof ruler_mesh_unmount;
     meshRender: typeof ruler_mesh_render;
-    constructor(type: RulerType, observer: Observer<HTMLElement | SVGElement>);
+    constructor(type: RulerType, observer: Observer);
 }

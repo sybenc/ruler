@@ -28,7 +28,7 @@ export class _Ruler {
   axis: Axis<NumberValue>;
   lines: Set<number> = new Set();
   tooltip = new Tooltip();
-  observer: Observer<HTMLElement | SVGElement>;
+  observer: Observer;
   __draggingLine: DomSelection | null = null;
   get __isX() {
     return this.type === "x";
@@ -46,7 +46,7 @@ export class _Ruler {
   meshUnmount = ruler_mesh_unmount;
   meshRender = ruler_mesh_render;
 
-  constructor(type: RulerType, observer: Observer<HTMLElement | SVGElement>) {
+  constructor(type: RulerType, observer: Observer) {
     this.observer = observer;
     const boardCoord = observer.boardCoord;
     const actualUpper = Math.max(this.observer.rootDOMRect.width, this.observer.rootDOMRect.height);

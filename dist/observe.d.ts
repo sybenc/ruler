@@ -1,11 +1,10 @@
-export interface Observer<T extends Element> {
+export type Observer = {
     root: Element;
     board: Element;
     rootDOMRect: DOMRect;
     boardDOMRect: DOMRect;
-    __resizeOberver: ResizeObserver;
-    get boardCoord(): {
+    readonly boardCoord: {
         x: number;
         y: number;
     };
-}
+};

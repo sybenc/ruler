@@ -27,7 +27,6 @@
       board
       rootDOMRect
       boardDOMRect
-      __resizeOberver
 
       get boardCoord() {
         return {
@@ -36,19 +35,18 @@
         };
       }
 
+      update() {
+        this.rootDOMRect = this.root.getBoundingClientRect();
+        this.boardDOMRect = this.board.getBoundingClientRect();
+      }
+
       constructor(root, board) {
         this.board = board;
         this.root = root;
-        this.rootDOMRect = this.root.getBoundingClientRect();
-        this.boardDOMRect = this.board.getBoundingClientRect();
-        this.__resizeOberver = new ResizeObserver(() => {
-          this.rootDOMRect = this.root.getBoundingClientRect();
-          this.boardDOMRect = this.board.getBoundingClientRect();
-        });
-        this.__resizeOberver.observe(this.root);
-        this.__resizeOberver.observe(this.board);
+        this.update()
       }
     }
+
     const root = document.getElementById('example-root')
     const board = document.getElementById('example-board')
     board.style.left = Math.round((root.offsetWidth - board.offsetWidth) / 2) + 'px'
@@ -70,7 +68,7 @@
 
       if (event.ctrlKey) {
         // 缩放操作
-        const rect = observer.rootDOMRect;
+        const rect = board.getBoundingClientRect();
         const mouseX = event.clientX - rect.left;
         const mouseY = event.clientY - rect.top;
         // 计算缩放增量
@@ -83,15 +81,17 @@
         translateY -= (mouseY / scale - mouseY / newScale) * newScale;
         scale = newScale;
         applyTransform();
-        ruler.x.applyTransform({scale, translateX, translateY})
-        ruler.y.applyTransform({scale, translateX, translateY})
+        ruler.x.applyTransform({ scale, translateX, translateY })
+        ruler.y.applyTransform({ scale, translateX, translateY })
+        observer.update()
       } else {
         // 平移操作
         translateX -= event.deltaX;
         translateY -= event.deltaY;
         applyTransform();
-        ruler.x.applyTransform({scale, translateX, translateY})
-        ruler.y.applyTransform({scale, translateX, translateY})
+        ruler.x.applyTransform({ scale, translateX, translateY })
+        ruler.y.applyTransform({ scale, translateX, translateY })
+        observer.update()
       }
     });
   </script>

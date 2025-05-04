@@ -5,7 +5,7 @@ export default class Ruler {
   x: _Ruler;
   y: _Ruler;
 
-  constructor(observer: Observer<HTMLElement | SVGElement>) {
+  constructor(observer: Observer) {
     this.x = new _Ruler("x", observer);
     this.y = new _Ruler("y", observer);
     this.y.mount();
