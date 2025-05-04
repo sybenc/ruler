@@ -81,18 +81,17 @@
         // 调整平移以保持鼠标位置固定
         translateX -= (mouseX / scale - mouseX / newScale) * newScale;
         translateY -= (mouseY / scale - mouseY / newScale) * newScale;
-        console.log(scale,newScale)
         scale = newScale;
         applyTransform();
-        ruler.x.applyTransform(scale, translateX, translateY)
-        ruler.y.applyTransform(scale, translateX, translateY)
+        ruler.x.applyTransform({scale, translateX, translateY})
+        ruler.y.applyTransform({scale, translateX, translateY})
       } else {
         // 平移操作
         translateX -= event.deltaX;
         translateY -= event.deltaY;
         applyTransform();
-        ruler.x.applyTransform(scale, translateX, translateY)
-        ruler.y.applyTransform(scale, translateX, translateY)
+        ruler.x.applyTransform({scale, translateX, translateY})
+        ruler.y.applyTransform({scale, translateX, translateY})
       }
     });
   </script>
