@@ -1,16 +1,22 @@
 {
   "name": "@sybenc/ruler",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "vite build & tsc"
   },
-  "keywords": ["ruler", "guideline", "比例尺", "尺子"],
+  "keywords": [
+    "ruler",
+    "guideline",
+    "比例尺",
+    "尺子"
+  ],
   "author": "sybenc",
   "license": "ISC",
   "description": "A D3-based ruler component.",
-    "devDependencies": {
+  "devDependencies": {
+    "@sybenc/freemove-types": "^1.0.2",
     "@types/d3-axis": "^3.0.6",
     "@types/d3-drag": "^3.0.7",
     "@types/d3-interpolate": "^3.0.4",
