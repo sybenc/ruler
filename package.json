@@ -16,7 +16,7 @@
   "license": "ISC",
   "description": "A D3-based ruler component.",
   "devDependencies": {
-    "@sybenc/freemove-types": "^1.0.2",
+    "@sybenc/freemove-types": "^1.0.4",
     "@types/d3-axis": "^3.0.6",
     "@types/d3-drag": "^3.0.7",
     "@types/d3-interpolate": "^3.0.4",

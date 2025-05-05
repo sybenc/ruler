@@ -1,3 +1,4 @@
+import * as Freemove from '@sybenc/freemove-types';
 import d3, { DomSelection } from "../d3";
 import { Axis } from "d3-axis";
 import { NumberValue, ScaleLinear } from "d3-scale";
@@ -8,7 +9,6 @@ import { ruler_line_remove } from "./ruler_line_remove";
 import { ruler_apply_transform } from "./ruler_apply_transform";
 import { ruler_line_render } from "./ruler_line_render";
 import { ruler_mount } from "./ruler_mount";
-import { Observer } from "../observe";
 import { Tooltip } from "./tooltip";
 import { ruler_mesh_mount } from "./ruler_mesh_mount";
 import { ruler_mesh_unmount } from "./ruler_mesh_unmount";
@@ -28,7 +28,7 @@ export class _Ruler {
   axis: Axis<NumberValue>;
   lines: Set<number> = new Set();
   tooltip = new Tooltip();
-  observer: Observer;
+  observer: Freemove.Observer;
   __draggingLine: DomSelection | null = null;
   get __isX() {
     return this.type === "x";
@@ -46,7 +46,7 @@ export class _Ruler {
   meshUnmount = ruler_mesh_unmount;
   meshRender = ruler_mesh_render;
 
-  constructor(type: RulerType, observer: Observer) {
+  constructor(type: RulerType, observer: Freemove.Observer) {
     this.observer = observer;
     const boardCoord = observer.boardCoord;
     const actualUpper = Math.max(this.observer.rootDOMRect.width, this.observer.rootDOMRect.height);

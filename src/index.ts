@@ -1,12 +1,11 @@
-import { Observer } from "./observe";
 import { _Ruler } from "./ruler/ruler";
-import { Freemove, FreemovePlugin } from "@sybenc/freemove-types";
+import * as Freemove from "@sybenc/freemove-types";
 
 export class Ruler {
   x: _Ruler;
   y: _Ruler;
 
-  constructor(observer: Observer) {
+  constructor(observer: Freemove.Observer) {
     this.x = new _Ruler("x", observer);
     this.y = new _Ruler("y", observer);
     this.y.mount();
@@ -16,23 +15,25 @@ export class Ruler {
   }
 }
 
-export const ruler: FreemovePlugin = {
+export const ruler: Freemove.PluginOptions = {
   name: "ruler",
-  install(this: Freemove) {
-    this.onAfterMount(function (this: Freemove) {
+  install(this: Freemove.Store) {
+    this.onMountEnd(function (this: Freemove.Store) {
       const observer = this.observer;
       this.ruler = new Ruler(observer);
+    });
+
+    this.onTransform(function (this: Freemove.Store) {
+      this.ruler.x.applyTransform(this.transform);
+      this.ruler.y.applyTransform(this.transform);
       this.ruler.x.meshUnmount();
       this.ruler.y.meshUnmount();
     });
-
-    this.onAfterTransform(function (this: Freemove) {
-      this.ruler.x.applyTransform(this.transform);
-      this.ruler.y.applyTransform(this.transform);
-    });
   },
-  uninstall(this: Freemove) {
+  uninstall(this: Freemove.Store) {
     this.ruler.x.unmount();
     this.ruler.y.unmount();
+    this.ruler.x.meshUnmount();
+    this.ruler.y.meshUnmount();
   },
 };
