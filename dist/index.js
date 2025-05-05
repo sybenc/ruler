@@ -14,19 +14,21 @@ export class Ruler {
 export const ruler = {
     name: "ruler",
     install() {
-        this.onAfterMount(function () {
+        this.onMountEnd(function () {
             const observer = this.observer;
             this.ruler = new Ruler(observer);
-            this.ruler.x.meshUnmount();
-            this.ruler.y.meshUnmount();
         });
-        this.onAfterTransform(function () {
+        this.onTransform(function () {
             this.ruler.x.applyTransform(this.transform);
             this.ruler.y.applyTransform(this.transform);
+            this.ruler.x.meshUnmount();
+            this.ruler.y.meshUnmount();
         });
     },
     uninstall() {
         this.ruler.x.unmount();
         this.ruler.y.unmount();
+        this.ruler.x.meshUnmount();
+        this.ruler.y.meshUnmount();
     },
 };
