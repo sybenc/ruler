@@ -1,8 +1,8 @@
 import { _Ruler } from "./ruler/ruler";
-import * as Freemove from "@sybenc/freemove-types";
+import { Observer, PluginCreator } from "@sybenc/freemove-types";
 export declare class Ruler {
     x: _Ruler;
     y: _Ruler;
-    constructor(observer: Freemove.Observer);
+    constructor(observer: Observer);
 }
-export declare const ruler: Freemove.PluginOptions;
+export declare const ruler: PluginCreator<Ruler>;

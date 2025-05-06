@@ -11,24 +11,24 @@ export class Ruler {
         this.y.applyTransform({ scale: 1, translateX: 0, translateY: 0 });
     }
 }
-export const ruler = {
-    name: "ruler",
-    install() {
-        this.onMountEnd(function () {
-            const observer = this.observer;
-            this.ruler = new Ruler(observer);
-        });
-        this.onTransform(function () {
-            this.ruler.x.applyTransform(this.transform);
-            this.ruler.y.applyTransform(this.transform);
-            this.ruler.x.meshUnmount();
-            this.ruler.y.meshUnmount();
-        });
-    },
-    uninstall() {
-        this.ruler.x.unmount();
-        this.ruler.y.unmount();
-        this.ruler.x.meshUnmount();
-        this.ruler.y.meshUnmount();
-    },
+export const ruler = (store) => {
+    const ruler = new Ruler(store.observer);
+    return {
+        name: "ruler",
+        data: ruler,
+        install() {
+            store.onTransform(() => {
+                ruler.x.applyTransform(store.transform);
+                ruler.y.applyTransform(store.transform);
+                ruler.x.meshUnmount();
+                ruler.y.meshUnmount();
+            });
+        },
+        uninstall() {
+            ruler.x.unmount();
+            ruler.y.unmount();
+            ruler.x.meshUnmount();
+            ruler.y.meshUnmount();
+        },
+    };
 };
