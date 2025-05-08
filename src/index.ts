@@ -29,12 +29,26 @@ export const ruler: PluginCreator<Ruler> = (store) => {
         ruler.x.meshUnmount();
         ruler.y.meshUnmount();
       });
+      store.onMountStart(() => {
+        ruler.x.sliderRender(store.selectedRect)
+        ruler.y.sliderRender(store.selectedRect)
+      })
+      store.onMoveRect(() => {
+        ruler.x.sliderRender(store.selectedRect)
+        ruler.y.sliderRender(store.selectedRect)
+      })
+      store.onMountEnd(() => {
+        ruler.x.sliderHidden()
+        ruler.y.sliderHidden()
+      })
     },
     uninstall() {
       ruler.x.unmount();
       ruler.y.unmount();
       ruler.x.meshUnmount();
       ruler.y.meshUnmount();
+      ruler.x.sliderHidden()
+      ruler.y.sliderHidden()
     },
   }
 };

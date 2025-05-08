@@ -13,6 +13,9 @@ import {ruler_mesh_mount} from "./ruler_mesh_mount";
 import {ruler_mesh_unmount} from "./ruler_mesh_unmount";
 import {ruler_mesh_render} from "./ruler_mesh_render";
 import {Observer} from "@sybenc/freemove-types";
+import {ruler_slider_show} from "./ruler_slider_show";
+import {ruler_slider_hidden} from "./ruler_slider_hidden";
+import {ruler_slider_render} from "./ruler_slider_render";
 
 export type RulerType = "x" | "y";
 
@@ -20,6 +23,7 @@ export class _Ruler {
   type: RulerType;
   svg: DomSelection;
   mesh: DomSelection;
+  slider: DomSelection;
   width: number;
   height: number;
   lower: number;
@@ -46,6 +50,9 @@ export class _Ruler {
   meshMount = ruler_mesh_mount;
   meshUnmount = ruler_mesh_unmount;
   meshRender = ruler_mesh_render;
+  sliderShow = ruler_slider_show;
+  sliderHidden = ruler_slider_hidden;
+  sliderRender = ruler_slider_render;
 
   constructor(type: RulerType, observer: Observer) {
     this.observer = observer;
@@ -79,7 +86,7 @@ export class _Ruler {
               .show()
               .fixed(
                   this.__isX ? event.clientX + 4 : this.observer.rootDOMRect.left + 24,
-                  this.__isX ? this.observer.rootDOMRect.height + 24 : event.clientY + 4
+                  this.__isX ? this.observer.rootDOMRect.top + 24 : event.clientY + 4
               )
               .html(
                   `${(this.__isX
@@ -105,6 +112,8 @@ export class _Ruler {
         .attr("width", this.observer.rootDOMRect.width)
         .attr("height", this.observer.rootDOMRect.height)
         .style("pointer-events", "none");
+
+    this.slider = this.svg.append('rect')
 
     if (this.__isX) {
       this.svg.append("rect").attr("x", 0).attr("y", 0).attr("width", 20).attr("height", 20).attr("fill", "#DCDCB4");
