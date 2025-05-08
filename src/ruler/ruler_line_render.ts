@@ -19,7 +19,7 @@ export function ruler_line_render(this: _Ruler) {
       this.lines.add(this.__draggingLine.datum());
       this.tooltip
         .show()
-        .fixed(x + 8, y + 8)
+        .fixed(event.sourceEvent.clientX + 8, event.sourceEvent.clientY + 8)
         .html(
           `${(
             ((this.scaleLinear(this.__draggingLine.datum() as number)! - this.scaleLinear(0)!) * 100) /
