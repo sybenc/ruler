@@ -77,7 +77,7 @@ export class _Ruler {
           const [mouseX, mouseY] = d3.pointer(event, this.svg.node());
           this.tooltip
               .show()
-              .fixed(this.__isX ? mouseX + 4 : 24, this.__isX ? 24 : mouseY + 4)
+              .fixed(this.__isX ? event.sourceEvent.clientX + 4 : 24, this.__isX ? 24 : event.sourceEvent.clientY + 4)
               .html(
                   `${(this.__isX
                           ? (Math.round(this.scaleLinear.invert(mouseX)) * 100) / this.observer.boardDOMRect.width

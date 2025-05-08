@@ -65,10 +65,10 @@ export class _Ruler {
             .call(this.axis);
         this.svg
             .on("mousemove", (event) => {
-            const [mouseX, mouseY] = d3.pointer(event, this.svg);
+            const [mouseX, mouseY] = d3.pointer(event, this.svg.node());
             this.tooltip
                 .show()
-                .fixed(this.__isX ? mouseX + 4 : 24, this.__isX ? 24 : mouseY + 4)
+                .fixed(this.__isX ? event.sourceEvent.clientX + 4 : 24, this.__isX ? 24 : event.sourceEvent.clientY + 4)
                 .html(`${(this.__isX
                 ? (Math.round(this.scaleLinear.invert(mouseX)) * 100) / this.observer.boardDOMRect.width
                 : (Math.round(this.scaleLinear.invert(mouseY)) * 100) / this.observer.boardDOMRect.height).toFixed(2)}%`);
@@ -77,7 +77,7 @@ export class _Ruler {
             this.tooltip.hidden();
         })
             .on("click", (event) => {
-            const [mouseX, mouseY] = d3.pointer(event, this.svg);
+            const [mouseX, mouseY] = d3.pointer(event, this.svg.node());
             this.lineAdd(this.__isX ? mouseX : mouseY);
         });
         this.mesh = d3
@@ -85,7 +85,7 @@ export class _Ruler {
             .style("position", "absolute")
             .style("left", 0)
             .style("top", 0)
-            .attr("viewbox", [0, 0, this.observer.rootDOMRect.width, this.observer.rootDOMRect.height])
+            .attr("viewBox", [0, 0, this.observer.rootDOMRect.width, this.observer.rootDOMRect.height].join(' '))
             .attr("width", this.observer.rootDOMRect.width)
             .attr("height", this.observer.rootDOMRect.height)
             .style("pointer-events", "none");
