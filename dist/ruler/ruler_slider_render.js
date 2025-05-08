@@ -1,8 +1,8 @@
 export function ruler_slider_render(selected) {
-    const x = this.scaleLinear.invert(selected.x);
-    const y = this.scaleLinear.invert(selected.y);
-    const w = this.scaleLinear.invert(selected.x + selected.w) - x;
-    const h = this.scaleLinear.invert(selected.y + selected.h) - y;
+    const x = this.scaleLinear(selected.x);
+    const y = this.scaleLinear(selected.y);
+    const w = this.scaleLinear(selected.x + selected.w) - x;
+    const h = this.scaleLinear(selected.y + selected.h) - y;
     this.slider
         .attr('x', this.__isX ? x : 0)
         .attr('y', this.__isX ? 0 : y)
