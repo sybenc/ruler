@@ -13,11 +13,15 @@ import { ruler_mesh_mount } from "./ruler_mesh_mount";
 import { ruler_mesh_unmount } from "./ruler_mesh_unmount";
 import { ruler_mesh_render } from "./ruler_mesh_render";
 import { Observer } from "@sybenc/freemove-types";
+import { ruler_slider_show } from "./ruler_slider_show";
+import { ruler_slider_hidden } from "./ruler_slider_hidden";
+import { ruler_slider_render } from "./ruler_slider_render";
 export type RulerType = "x" | "y";
 export declare class _Ruler {
     type: RulerType;
     svg: DomSelection;
     mesh: DomSelection;
+    slider: DomSelection;
     width: number;
     height: number;
     lower: number;
@@ -40,5 +44,8 @@ export declare class _Ruler {
     meshMount: typeof ruler_mesh_mount;
     meshUnmount: typeof ruler_mesh_unmount;
     meshRender: typeof ruler_mesh_render;
+    sliderShow: typeof ruler_slider_show;
+    sliderHidden: typeof ruler_slider_hidden;
+    sliderRender: typeof ruler_slider_render;
     constructor(type: RulerType, observer: Observer);
 }
