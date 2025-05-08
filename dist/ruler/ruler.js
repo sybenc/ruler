@@ -68,7 +68,7 @@ export class _Ruler {
             const [mouseX, mouseY] = d3.pointer(event, this.svg.node());
             this.tooltip
                 .show()
-                .fixed(this.__isX ? event.sourceEvent.clientX + 4 : 24, this.__isX ? 24 : event.sourceEvent.clientY + 4)
+                .fixed(this.__isX ? event.clientX + 4 : this.observer.rootDOMRect.left + 24, this.__isX ? this.observer.rootDOMRect.height + 24 : event.clientY + 4)
                 .html(`${(this.__isX
                 ? (Math.round(this.scaleLinear.invert(mouseX)) * 100) / this.observer.boardDOMRect.width
                 : (Math.round(this.scaleLinear.invert(mouseY)) * 100) / this.observer.boardDOMRect.height).toFixed(2)}%`);
